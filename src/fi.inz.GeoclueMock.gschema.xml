@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/apps/geoclue/mock/" id="fi.inz.GeoclueMock">
+    <key type="d" name="latitude">
+      <default>0.0</default>
+      <summary>Fake latitude</summary>
+      <description>Fake latitude</description>
+    </key>
+    <key type="d" name="longitude">
+      <default>0.0</default>
+      <summary>Fake longitude</summary>
+      <description>Fake longitude</description>
+    </key>
+    <key type="d" name="fuzz">
+      <default>0.0</default>
+      <summary>Fuzz added to position</summary>
+      <description>Fuzz added to position</description>
+    </key>
+    <key type="b" name="active">
+      <default>false</default>
+      <summary>Use fake position</summary>
+      <description>Use fake position</description>
+    </key>
+  </schema>
+</schemalist>

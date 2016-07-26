@@ -1,0 +1,7 @@
+[Geoclue Provider]
+Name=Mock Provider
+Service=org.freedesktop.Geoclue.Providers.Mock
+Path=/org/freedesktop/Geoclue/Providers/Mock
+Interfaces=org.freedesktop.Geoclue.Position
+Provides=ProvidesUpdates
+Accuracy=None
