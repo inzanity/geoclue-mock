@@ -1,5 +1,5 @@
 AC_COPYRIGHT([Copyright (C) 2016 Santtu Lakkala])
-AC_INIT([geoclue-mock], [0.0.1], [inz@inz.fi])
+AC_INIT([geoclue-mock], [0.0.2], [inz@inz.fi])
 AC_PREREQ(2.60)
 
 AC_CONFIG_SRCDIR(configure.ac)

@@ -44,6 +44,7 @@ typedef struct {
 
 	GMainLoop *loop;
 
+	guint timer;
 	gboolean active;
 	double latitude;
 	double longitude;
@@ -172,7 +173,12 @@ static gboolean _geoclue_mock_emit_position_changed(gpointer data)
 
 	geoclue_accuracy_free(accuracy);
 
-	return G_SOURCE_CONTINUE;
+	mock->timer =
+		g_timeout_add_seconds(5,
+				      _geoclue_mock_emit_position_changed,
+				      mock);
+
+	return G_SOURCE_REMOVE;
 }
 
 static void geoclue_mock_set_property(GObject *object,
@@ -202,7 +208,11 @@ static void geoclue_mock_set_property(GObject *object,
 		return;
 	}
 
-	_geoclue_mock_emit_position_changed(mock);
+	if (mock->timer)
+		g_source_remove(mock->timer);
+	mock->timer = g_timeout_add(100,
+				    _geoclue_mock_emit_position_changed,
+				    mock);
 }
 
 static void geoclue_mock_get_property(GObject *object,
@@ -239,6 +249,10 @@ static void geoclue_mock_init(GeoclueMock *mock)
 				"org.freedesktop.Geoclue.Providers.Mock",
 				"/org/freedesktop/Geoclue/Providers/Mock",
 				"Mock", "Mock provider");
+	mock->timer =
+		g_timeout_add_seconds(5,
+				      _geoclue_mock_emit_position_changed,
+				      mock);
 }
 
 static gboolean _geoclue_mock_get_position(GcIfacePosition *gc,
@@ -290,8 +304,6 @@ int main(int argc, char **argv)
 
 	srand(time(NULL));
 	mock = g_object_new(GEOCLUE_TYPE_MOCK, NULL);
-
-	g_timeout_add_seconds(5, _geoclue_mock_emit_position_changed, mock);
 
 	mock->loop = g_main_loop_new(NULL, TRUE);
 	settings = g_settings_new("fi.inz.GeoclueMock");
